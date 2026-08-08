@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: hanshidemo-weather-citylist9300
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/weather?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${WEATHER_DB_USERNAME:root}
+    password: ${WEATHER_DB_PASSWORD:}
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000  # 城市列表缓存10分钟
+
+server:
+  port: 9300
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+      # 表名通过 @TableName 注解指定，无需全局前缀

@@ -1,0 +1,12 @@
+server:
+  port: 9500
+
+spring:
+  application:
+    name: hanshidemo-service-provider-hystrix9500
+
+eureka:
+  client:
+    fetch-registry: true #抓取所有注册表数据 实例启动时 注册到注册中心同时获取从注册中心下载 注册表(有所有客户端的信息 服务名称:ip地址/端口号)
+    register-with-eureka: true #需要注册自己 每30秒发送一次心跳给注册中心，告诉它自己还活着，如果了个30秒没有发送心跳，那么注册中心会把自己从注册表上删除
+    service-url.defaultZone: http://localhost:9001/eureka/

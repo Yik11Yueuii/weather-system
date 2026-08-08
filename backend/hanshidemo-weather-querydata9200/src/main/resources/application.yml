@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: hanshidemo-weather-querydata9200
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+server:
+  port: 9200
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+
+# Hystrix 超时配置（全局）
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000

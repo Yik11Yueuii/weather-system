@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: hanshidemo-weather-cache9100
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+
+server:
+  port: 9100
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+
+# Ribbon超时配置（Feign底层走Ribbon，默认ReadTimeout=1000ms，需要调大）
+# 因为 QueryData(9200) 调天行API可能需要2-5秒，Hystrix设了5s，这里配8s给足buffer
+ribbon:
+  ReadTimeout: 8000
+  ConnectTimeout: 3000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+
+# Feign超时（覆盖默认值，双保险）
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 8000

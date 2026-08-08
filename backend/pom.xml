@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.6.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+
+    <groupId>com.huawei</groupId>
+    <artifactId>huaweipro</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <!-- 父工程必须是pom -->
+    <packaging>pom</packaging>
+
+
+    <name>huaweipro</name>
+    <description>Huawei Microservice Project</description>
+
+
+    <!-- 子模块 -->
+    <modules>
+
+        <module>eureka-server9001</module>
+        <module>hanshidemo-server-9002</module>
+        <module>hanshidemo-sever-provider8002</module>
+        <module>hanshidemo-service-consumer8101</module>
+        <module>hanshidemo-service-feign8201</module>
+        <module>hanshidemo-weather-cache9100</module>
+        <module>hanshidemo-weather-public-interface</module>
+        <module>hanshidemo-weather-querydata9200</module>
+        <module>hanshidemo-weather-citylist9300</module>
+        <module>hanshidemo-service-provider-hystrix9500</module>
+        <module>hanshidemo-service-zuul6001</module>
+
+
+    </modules>
+
+
+    <properties>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Java8统一管理 -->
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+
+
+        <!-- Spring Cloud -->
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+
+        <!-- 升级Lombok以兼容JDK 17 -->
+        <lombok.version>1.18.30</lombok.version>
+
+    </properties>
+
+
+
+    <!-- Spring Cloud版本管理 -->
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+
+                <version>${spring-cloud.version}</version>
+
+                <type>pom</type>
+
+                <scope>import</scope>
+
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+
+    <repositories>
+
+        <repository>
+
+            <id>aliyun</id>
+
+            <url>https://maven.aliyun.com/repository/public</url>
+
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+
+        </repository>
+
+    </repositories>
+
+
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+
+                <groupId>org.springframework.boot</groupId>
+
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+
+</project>

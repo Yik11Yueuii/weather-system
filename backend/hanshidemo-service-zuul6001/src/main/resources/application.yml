@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: hanshidemo-service-zuul6001
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+
+server:
+  port: 6001
+
+# ===== Zuul 路由配置 =====
+zuul:
+  # 敏感头设为空，允许Cookie等头透传
+  sensitive-headers:
+  routes:
+    # 天气查询 → querydata9200
+    # /weatherhanshi/weather/101020100 → 全路径转发 → querydata9200
+    weather-query:
+      path: /weatherhanshi/weather/**
+      serviceId: hanshidemo-weather-querydata9200
+      strip-prefix: false
+
+    # 城市列表 → citylist9300
+    # /weatherhanshi/tabCity/CityList → 全路径转发 → citylist9300
+    weather-city:
+      path: /weatherhanshi/tabCity/**
+      serviceId: hanshidemo-weather-citylist9300
+      strip-prefix: false
+
+  # 请求超时配置
+  host:
+    connect-timeout-millis: 5000
+    socket-timeout-millis: 30000
+
+# Ribbon 超时（Zuul 底层用 Ribbon 做负载均衡）
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 5000
+
+# Hystrix 超时（必须 ≥ Ribbon 超时 × 重试次数）
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

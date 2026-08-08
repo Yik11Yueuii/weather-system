@@ -1,0 +1,77 @@
+1月4日微服务拆分：
+
+1.什么是缓存穿透？用户请求---》redis----》数据库
+
+2.什么是缓存雪崩？redis中存储的所有数据一瞬间全部清空，过了保质期
+
+3.代码进化
+
+4.总结:所有功能都实现了没有？接口方法绑定参数时都加注解了没有？
+
+5.微服务拆分前的规划：
+微服务拆分原则：
+①高内聚：业务关联度很高的接口方法放在一起
+电商平台：用户模块  商品模块  订单模块  购物车模块  支付模块  物流模块  。。。。
+体检APP：
+======================================
+拆分结果一：  解决没有微服务之间的调用关系，所以加多一个微服务
+①定时任务，缓存天气的微服务7222  独立的  √
+
+
+②查询天气数据的服务7333   独立的  文档：接口提供两个方法： 一个是直接查询第三方接口   第二个是先查缓存再查询第三方接口
+name:  weather-queryweatherdata-7333
+methods:
+方法一：
+@RequestMapping("/findWeatherByApi/{cityId}")
+    public WeatherResponse findWeatherByApi(@PathVariable("cityId") String cityId);
+方法二：
+    @RequestMapping("/findWeatherByUser/{cityId}")
+    public WeatherResponse findWeatherByUser(@PathVariable("cityId") String cityId);
+
+③展示天气数据的微服务7444  独立的   weather-showweatherdata-7444
+
+WeatherController:
+
+@RequestMapping("show/{cityId}")
+public ModelAndView show(@Pathvarible("cityId") String cityId){    //最接地气的方法：因为这个方法是给用户调用的
+
+  }
+
+伪装②，所以③写代码的时候要查看需求文档
+
+
+问题：
+需要导什么包？ pom.xml   Thymeleaf   Eureka-client  OpenFeign
+需要进行哪些配置？  application.yml    Thymeleaf不缓存   往哪里注册
+需要在启动类那里开启哪些开关？  @EnableClient  @EnableFeign
+当前微服务的职责是什么？  写个页面展示天气数据
+需要调用其它微服务吗？   调用7333查询天气数据
+
+
+
+了解就好：再高级一点，根据当前微服务的流量增长情况，设计微服务的部署方案，部署到哪些机器上，部署的数量是多少？ip地址设定，port端口号区段划分
+
+
+④公共接口7111（这不是一个微服务，只是一个jar包，存放公共类）  √
+
+===========================================
+拆分结果二：
+①定时任务，缓存天气的微服务
+②查询天气数据，
+③展示天气数据的微服务
+④查询城市列表数据又是一个
+
+⑤公共接口（这不是一个微服务，只是一个jar包，存放公共类）
+
+
+
+
+
+
+①每个微服务的职责，有没有必要拆出来
+
+
+②开发步骤，需要哪些包，哪些配置？
+
+
+6.微服务网关

@@ -1,0 +1,18 @@
+server:
+  port: 9002
+
+eureka:
+  server:
+    enable-self-preservation: false #关闭自我保护，下线实例立即删除
+    eviction-interval-timer-in-ms: 5000 #清除无效节点间隔设为5s（默认60s，开发时改小方便调试
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false #禁止注册中心自己注册自己
+    fetch-registry: false #注册中心不需要抓取这个注册表
+    service-url:
+      defaultZone: http://localhost:9002/eureka/
+
+spring:
+  application:
+    name: eureka-server9002

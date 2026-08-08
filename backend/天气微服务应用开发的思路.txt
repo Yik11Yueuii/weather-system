@@ -1,0 +1,32 @@
+
+
+天气微服务应用开发的思路：
+
+1.我们不生产天气数据
+从第三方接口获取：  怎么样调用互联网上的接口
+
+2.访问第三方接口花费巨大，我们会省钱，把天气查询结果放入Redis缓存，
+每隔30分钟刷新缓存数据（使用的是定时任务，会用到Cron表达式）
+
+
+3.我们提供界面展示天气数据：Thymeleaf
+
+
+4.担心刷新缓存数据影响用户对APP的访问，所以我们使用微服务架构开发
+
+
+=================================================================
+具体开发步骤：
+1.定义对象，用于封装查询结果------------三个实体类
+D:\BaiduNetdiskDownload\weatherapp-springcloud\weather-fetcher\src\main\java\com\example\weatherfetcher  天气服务的三个实体类在这里
+2.使用RestTemplate访问天气API接口，获取天气数据--------RestTemplate（如何访问第三方接口）
+3.将天气数据展示到页面----------Thymeleaf
+
+①导包
+②配置
+③创建页面，在页面中导入命名空间  xmlns:th="http://www.thymeleaf.org"
+
+4.很烧钱，所以不要直接访问接口，可以先把数据放入Redis缓存，然后查询的时候从Redis缓存中拿---------------定时任务
+D:\teacher-file\17.Spring Boot框架技术\springboot授课资料
+
+

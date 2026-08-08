@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: demo-provider-feign-8201
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url.defaultZone: http://localhost:9001/eureka/
+
+#    instance:
+#      prefer-ip-address: true
+server:
+  port: 8201
+
+feign:
+  hystrix:
+    enabled: true
